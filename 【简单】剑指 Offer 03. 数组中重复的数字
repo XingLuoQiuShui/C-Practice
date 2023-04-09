@@ -1,0 +1,52 @@
+#剑指 Offer 03. 数组中重复的数字
+这是我自己做的，两层for循环嵌套，时间复杂度明显超了。。。
+class Solution {
+public:
+    int findRepeatNumber(vector<int>& nums) {
+        int i = 0;
+        int j = 0;
+        int finder = 0;
+        for(i=0; i<nums.size(); i++)
+        {   finder = nums[i];
+            for(j=i+1; j<nums.size(); j++)
+            {
+                if(nums[j] == finder)
+                    i=nums.size();   //找到一致的数时立刻结束循环
+            }
+        }
+    return finder;    
+    }
+};
+
+这是大佬“独恋云风星月”做的答案，在这里做下注解：
+
+作者：独恋云风星月
+链接：https://leetcode.cn/problems/shu-zu-zhong-zhong-fu-de-shu-zi-lcof/solutions/2122528/jian-zhi-offerlian-xi-c-t8-by-zealous-ga-kxxz/
+来源：力扣（LeetCode）
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
+解法一 解题思路
+暴力求解。。。在一个长度为 n 的数组 nums 里的所有数字都在 0～n-1 的范围内。
+限制了数字的范围，可以使用数组的特性来标记重复数字，对应数值下标位置的数值加1（初始化为0）。然后遍历数组找到一个数值大于1的下标。
+
+class Solution {
+public:
+    int findRepeatNumber(vector<int>& nums) {
+        int temp[nums.size()];                  //temp数组存放nums数组中各数的出现次数
+        memset(temp, 0, sizeof(temp))【1】;     //将temp数组中所有值进行清零操作
+        for (int i = 0; i < nums.size(); i++) {
+            temp[nums[i]]++;【2】               //锁定nums数组中遍历到的当前值，将其作为temp数组的下标，为这个数在该数组中的出现次数加一        
+        }
+        for (int i = 0; i < nums.size(); i++) {
+            if (temp[i] > 1){                   //如果出现次数＞1，直接返回这个数的值。
+                return i;
+            }
+        }
+        return 0;
+    }
+};
+
+【1】void *memset(void *s, int ch, size_t n);
+    函数解释：将s中当前位置后面的n个字节 （typedef unsigned int size_t ）用 ch 替换并返回 s 。
+    memset：作用是在一段内存块中填充某个给定的值，它是对较大的结构体或数组进行清零操作的一种最快方法 [1]  。
+【2】难点，看了很多次才看明白意思。重在理解nums[i]作为temp数组下标的含义。
