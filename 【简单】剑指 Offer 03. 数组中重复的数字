@@ -50,3 +50,23 @@ public:
     函数解释：将s中当前位置后面的n个字节 （typedef unsigned int size_t ）用 ch 替换并返回 s 。
     memset：作用是在一段内存块中填充某个给定的值，它是对较大的结构体或数组进行清零操作的一种最快方法 [1]  。
 【2】难点，看了很多次才看明白意思。重在理解nums[i]作为temp数组下标的含义。
+
+大佬的题解中给出了多种解法，我学习了最简单的排序法。
+排序之后，只要相邻的两个数是相等的，就找到了需要的数。
+其实还是题目条件利用不充分啊(但是也不知道怎么才能用得上)
+
+class Solution {
+public:
+    int findRepeatNumber(vector<int>& nums) {
+        int i;
+        sort(nums.begin(),nums.end());
+        for(i=0; i<nums.size(); i++)
+        {
+            if(nums[i]==nums[i+1])
+            {
+                return nums[i];
+            }
+        }
+        return 0; 
+    }
+};
