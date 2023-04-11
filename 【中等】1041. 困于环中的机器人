@@ -1,0 +1,72 @@
+在无限的平面上，机器人最初位于 (0, 0) 处，面朝北方。注意:
+
+    北方向 是y轴的正方向。
+    南方向 是y轴的负方向。
+    东方向 是x轴的正方向。
+    西方向 是x轴的负方向。
+
+机器人可以接受下列三条指令之一：
+
+    "G"：直走 1 个单位
+    "L"：左转 90 度
+    "R"：右转 90 度
+
+机器人按顺序执行指令 instructions，并一直重复它们。
+
+只有在平面中存在环使得机器人永远无法离开时，返回 true。否则，返回 false。
+提示：
+
+    1 <= instructions.length <= 100
+    instructions[i] 仅包含 'G', 'L', 'R'
+
+原先的代码不能判断多次循环后返回原点的情况，一时间不知道该如何解决了！
+经过评论区的提示，最多四次循环，如果还不能返回原点也就不行了。
+class Solution {
+public:
+    bool isRobotBounded(string instructions) {
+        int x = 0;
+        int y = 0;
+        int i;
+        int time;
+        char direction = 'N';
+        for(time=1; time<=4; time++)
+        {
+            for(i=0; i<instructions.length(); i++)
+            {
+                if(instructions[i] == 'G')
+                {
+                    switch(direction)
+                    {
+                        case 'N': y++; break;
+                        case 'S': y--; break;
+                        case 'W': x--; break;
+                        case 'E': x++; break;
+                    }
+                }else if(instructions[i] == 'L')
+                {
+                    switch(direction)
+                    {
+                        case 'N': direction = 'W'; break;
+                        case 'S': direction = 'E'; break;
+                        case 'W': direction = 'S'; break;
+                        case 'E': direction = 'N'; break;
+                    }
+                }else{
+                    switch(direction)
+                    {
+                        case 'N': direction = 'E'; break;
+                        case 'S': direction = 'W'; break;
+                        case 'W': direction = 'N'; break;
+                        case 'E': direction = 'S'; break;
+                    }
+                }
+            }
+        }
+        if(x==0 && y==0)
+        {
+            return true;
+        }else{
+            return false;
+        }
+    }
+};
